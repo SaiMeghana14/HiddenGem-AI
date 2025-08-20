@@ -1,7 +1,6 @@
 from fastapi import APIRouter
 router = APIRouter()
 
-# Stubs to plug real booking APIs later
 @router.get("/search_stay")
 def search_stay(city: str = "Hyderabad", budget: int = 1500):
     return {"city": city, "results": [
