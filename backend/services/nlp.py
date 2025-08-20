@@ -4,14 +4,13 @@ import re
 MOOD_KEYWORDS = {
     "adventurous": ["adventure", "adventurous", "trek", "hike", "kayak", "climb", "thrill"],
     "calm": ["calm", "quiet", "peace", "relax", "spa", "park", "book"],
-    "foodie": ["food", "eat", "biryani", "chai", "cafe", "restaurant", "street"],
+    "foodie": ["food", "eat", "biryani", "chai", "cafe", "restaurant", "street", "bakery"],
     "nightlife": ["night", "music", "club", "live", "bar"],
     "culture": ["heritage", "history", "museum", "craft", "temple", "class"],
 }
-
 INTENT_PATTERNS = {
     "plan_itinerary": r"(plan|itinerary|schedule|route)",
-    "find_food": r"(food|eat|restaurant|cafe|chai|biryani|thali)",
+    "find_food": r"(food|eat|restaurant|cafe|chai|biryani|thali|bakery)",
     "find_stay": r"(stay|hotel|hostel|homestay)",
 }
 
