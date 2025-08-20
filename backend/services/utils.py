@@ -1,4 +1,4 @@
-import os, sqlite3, json
+import os, sqlite3
 from typing import List, Dict, Any
 
 DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "..", "community.db")
@@ -9,7 +9,8 @@ def _ensure_db():
     cur = con.cursor()
     cur.execute("""CREATE TABLE IF NOT EXISTS community (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT, city TEXT, lat REAL, lon REAL, category TEXT, tags TEXT, notes TEXT, votes INTEGER DEFAULT 0
+        name TEXT, city TEXT, lat REAL, lon REAL,
+        category TEXT, tags TEXT, notes TEXT, votes INTEGER DEFAULT 0
     )""")
     con.commit()
     con.close()
@@ -44,3 +45,12 @@ def list_community_places(city: str) -> List[Dict[str, Any]]:
     rows = [dict(r) for r in cur.fetchall()]
     con.close()
     return rows
+
+def exists_place(place_id: int) -> bool:
+    _ensure_db()
+    con = sqlite3.connect(DB_PATH)
+    cur = con.cursor()
+    cur.execute("SELECT id FROM community WHERE id = ?", (place_id,))
+    row = cur.fetchone()
+    con.close()
+    return row is not None
