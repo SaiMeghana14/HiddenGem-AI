@@ -1,14 +1,14 @@
-from fastapi import APIRouter, Query
-from guides.transport import compute_route
+from fastapi import APIRouter
+import random
 
-router = APIRouter(prefix="/transport", tags=["transport"])
+router = APIRouter()
 
-@router.get("/route")
-def get_route(
-    start_lat: float = Query(...),
-    start_lon: float = Query(...),
-    end_lat: float = Query(...),
-    end_lon: float = Query(...),
-    mode: str = Query("walk", enum=["walk", "bike", "car", "transit"])
-):
-    return compute_route(start_lat, start_lon, end_lat, end_lon, mode)
+@router.get("/transport_options")
+def transport_options(city: str = "Hyderabad"):
+    options = [
+        {"mode": "Metro", "avg_cost": 50},
+        {"mode": "Bus", "avg_cost": 20},
+        {"mode": "Auto Rickshaw", "avg_cost": 100},
+        {"mode": "Cab", "avg_cost": 200},
+    ]
+    return {"city": city, "results": options}
