@@ -1,8 +1,22 @@
 from fastapi import APIRouter, Query
-from guides.itinerary import build_itinerary
+from data import attractions, food, events
+import random
 
-router = APIRouter()
+router = APIRouter(prefix="/itinerary", tags=["itinerary"])
 
-@router.post("/plan")
-def plan(city: str, days: int = 2, budget_per_day: int = 1000, preferences: list[str] = Query(default=[])):
-    return build_itinerary(city, days, budget_per_day, preferences)
+@router.get("/")
+def generate_itinerary(city: str = Query(...), days: int = 2):
+    atts = [a for a in attractions.get_attractions() if a["city"].lower() == city.lower()]
+    foods = [f for f in food.get_food() if f["city"].lower() == city.lower()]
+    evs = [e for e in events.get_events() if e["city"].lower() == city.lower()]
+
+    plan = []
+    for d in range(days):
+        day_plan = {
+            "day": d + 1,
+            "morning": random.choice(atts) if atts else None,
+            "afternoon": random.choice(evs) if evs else None,
+            "evening": random.choice(foods) if foods else None,
+        }
+        plan.append(day_plan)
+    return {"city": city, "days": days, "plan": plan}
