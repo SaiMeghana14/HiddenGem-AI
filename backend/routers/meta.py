@@ -1,12 +1,15 @@
 from fastapi import APIRouter
 
-router = APIRouter(prefix="/meta", tags=["meta"])
+router = APIRouter()
 
-@router.get("/")
-def meta_info():
+@router.get("/health")
+def health_check():
+    return {"status": "ok", "service": "Travel Assistant API"}
+
+@router.get("/about")
+def about():
     return {
-        "app": "Travel Assistant Backend",
-        "version": "1.0.0",
-        "author": "Team HiddenGem",
-        "description": "API backend serving travel recommendations, itineraries, and cultural insights."
+        "project": "Travel Assistant",
+        "version": "1.0",
+        "description": "Smart travel assistant with recommendations, bookings, and cultural insights."
     }
