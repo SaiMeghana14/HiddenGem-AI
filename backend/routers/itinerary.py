@@ -1,22 +1,15 @@
-from fastapi import APIRouter, Query
-from data import attractions, food, events
+from fastapi import APIRouter
 import random
 
-router = APIRouter(prefix="/itinerary", tags=["itinerary"])
+router = APIRouter()
 
-@router.get("/")
-def generate_itinerary(city: str = Query(...), days: int = 2):
-    atts = [a for a in attractions.get_attractions() if a["city"].lower() == city.lower()]
-    foods = [f for f in food.get_food() if f["city"].lower() == city.lower()]
-    evs = [e for e in events.get_events() if e["city"].lower() == city.lower()]
-
-    plan = []
-    for d in range(days):
-        day_plan = {
-            "day": d + 1,
-            "morning": random.choice(atts) if atts else None,
-            "afternoon": random.choice(evs) if evs else None,
-            "evening": random.choice(foods) if foods else None,
-        }
-        plan.append(day_plan)
-    return {"city": city, "days": days, "plan": plan}
+@router.get("/generate_itinerary")
+def generate_itinerary(city: str = "Hyderabad", days: int = 2):
+    mock_places = [
+        f"{city} Fort", f"{city} Museum", f"{city} Lake",
+        f"{city} Market", f"{city} Garden"
+    ]
+    itinerary = {}
+    for d in range(1, days+1):
+        itinerary[f"Day {d}"] = random.sample(mock_places, k=min(2, len(mock_places)))
+    return {"city": city, "days": days, "plan": itinerary}
