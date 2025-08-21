@@ -1,10 +1,12 @@
-from fastapi import APIRouter, Query
-from data import cities
-import random
+from fastapi import APIRouter
 
-router = APIRouter(prefix="/facts", tags=["facts"])
+router = APIRouter()
 
-@router.get("/city")
-def city_fact(city: str = Query(...)):
-    facts = [c for c in cities.get_cities() if c["city"].lower() == city.lower()]
-    return random.choice(facts)["fact"] if facts else {"message": "No fact found"}
+@router.get("/facts")
+def get_facts(city: str = "Hyderabad"):
+    facts = [
+        f"{city} is known as the City of Pearls.",
+        f"{city} houses the famous Charminar.",
+        f"{city} is a hub for IT and film industry."
+    ]
+    return {"city": city, "results": facts}
