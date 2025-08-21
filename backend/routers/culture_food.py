@@ -1,13 +1,22 @@
-from fastapi import APIRouter, Query
-from data import food
+from fastapi import APIRouter
+import random
 
-router = APIRouter(prefix="/culture", tags=["culture-food"])
+router = APIRouter()
+
+@router.get("/culture")
+def get_culture(city: str = "Hyderabad"):
+    mock_culture = [
+        {"aspect": "Festival", "detail": "Diwali celebrations"},
+        {"aspect": "Clothing", "detail": "Traditional sarees & sherwanis"},
+        {"aspect": "Language", "detail": "Telugu, Urdu, Hindi, English"},
+    ]
+    return {"city": city, "results": mock_culture}
 
 @router.get("/food")
-def get_food_by_city(city: str = Query(...)):
-    return [f for f in food.get_food() if f["city"].lower() == city.lower()]
-
-@router.get("/dish")
-def get_dish_info(dish: str = Query(...)):
-    items = [f for f in food.get_food() if dish.lower() in f["dish"].lower()]
-    return items if items else {"message": "Dish not found"}
+def get_food(city: str = "Hyderabad"):
+    mock_food = [
+        {"dish": "Biryani", "price": 250},
+        {"dish": "Haleem", "price": 200},
+        {"dish": "Irani Chai", "price": 50},
+    ]
+    return {"city": city, "results": mock_food}
