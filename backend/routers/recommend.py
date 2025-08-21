@@ -1,25 +1,48 @@
 from fastapi import APIRouter, Query
-from data import attractions, stays, food, events
+import pandas as pd
 import random
+import os
 
-router = APIRouter(prefix="/recommend", tags=["recommendations"])
+router = APIRouter()
 
-@router.get("/attractions")
-def recommend_attractions(city: str = Query(..., description="City name")):
-    items = [a for a in attractions.get_attractions() if a["city"].lower() == city.lower()]
-    return random.sample(items, min(3, len(items))) if items else []
+DATA_DIR = os.path.join(os.path.dirname(__file__), "../../data")
+CITIES_CSV = os.path.join(DATA_DIR, "cities.csv")
+ATTRACTIONS_CSV = os.path.join(DATA_DIR, "attractions.csv")
 
-@router.get("/stays")
-def recommend_stays(city: str):
-    items = [s for s in stays.get_stays() if s["city"].lower() == city.lower()]
-    return random.sample(items, min(3, len(items))) if items else []
+def safe_load_csv(path):
+    try:
+        return pd.read_csv(path)
+    except Exception as e:
+        print(f"⚠️ Error loading {path}: {e}")
+        return pd.DataFrame()
 
-@router.get("/food")
-def recommend_food(city: str):
-    items = [f for f in food.get_food() if f["city"].lower() == city.lower()]
-    return random.sample(items, min(3, len(items))) if items else []
+cities_df = safe_load_csv(CITIES_CSV)
+attractions_df = safe_load_csv(ATTRACTIONS_CSV)
 
-@router.get("/events")
-def recommend_events(city: str):
-    items = [e for e in events.get_events() if e["city"].lower() == city.lower()]
-    return random.sample(items, min(3, len(items))) if items else []
+@router.get("/recommend_city")
+def recommend_city(region: str = "India", budget: int = 2000):
+    if not cities_df.empty:
+        filtered = cities_df[cities_df["region"].str.lower() == region.lower()]
+        if not filtered.empty:
+            return {"region": region, "results": filtered.to_dict(orient="records")}
+
+    fallback = [
+        {"city": "Hyderabad", "region": "India", "budget": 1500},
+        {"city": "Delhi", "region": "India", "budget": 2000},
+        {"city": "Mumbai", "region": "India", "budget": 2500},
+    ]
+    return {"region": region, "results": fallback}
+
+@router.get("/recommend_attractions")
+def recommend_attractions(city: str = "Hyderabad"):
+    if not attractions_df.empty:
+        city_atts = attractions_df[attractions_df["city"].str.lower() == city.lower()]
+        if not city_atts.empty:
+            return {"city": city, "results": city_atts.to_dict(orient="records")}
+
+    fallback = [
+        {"name": f"{city} Fort", "type": "Historic", "rating": 4.5},
+        {"name": f"{city} Lake", "type": "Nature", "rating": 4.3},
+        {"name": f"{city} Museum", "type": "Cultural", "rating": 4.1},
+    ]
+    return {"city": city, "results": fallback}
