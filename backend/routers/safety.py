@@ -1,12 +1,15 @@
 from fastapi import APIRouter
-from guides.safety import safety_summary, live_alerts
 
-router = APIRouter()
+router = APIRouter(prefix="/safety", tags=["safety"])
 
-@router.get("/summary")
-def summary(city: str):
-    return safety_summary(city)
+safety_tips = [
+    "Keep your belongings secure in crowded areas.",
+    "Avoid isolated places late at night.",
+    "Use only licensed taxis or ride-sharing apps.",
+    "Stay hydrated and beware of heat in summers.",
+    "Respect local customs and dress codes."
+]
 
-@router.get("/alerts")
-def alerts(city: str):
-    return {"alerts": live_alerts(city)}
+@router.get("/tips")
+def get_safety_tips():
+    return safety_tips
