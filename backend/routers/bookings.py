@@ -5,16 +5,15 @@ import os
 
 router = APIRouter()
 
-# Paths to CSV files (adjust if needed)
+# Paths to CSV files
 DATA_DIR = os.path.join(os.path.dirname(__file__), "../../data")
-CITIES_CSV = os.path.join(DATA_DIR, "cities.csv")
-ATTRACTIONS_CSV = os.path.join(DATA_DIR, "attractions.csv")
-FOOD_CSV = os.path.join(DATA_DIR, "food.csv")
-PHRASEBOOK_CSV = os.path.join(DATA_DIR, "phrasebook.csv")
 STAYS_CSV = os.path.join(DATA_DIR, "stays.csv")
 EVENTS_CSV = os.path.join(DATA_DIR, "events.csv")
+FOOD_CSV = os.path.join(DATA_DIR, "food.csv")
+PHRASEBOOK_CSV = os.path.join(DATA_DIR, "phrasebook.csv")
+ATTRACTIONS_CSV = os.path.join(DATA_DIR, "attractions.csv")
 
-# Load datasets
+# Load datasets safely
 def safe_load_csv(path):
     try:
         return pd.read_csv(path)
@@ -22,12 +21,11 @@ def safe_load_csv(path):
         print(f"⚠️ Error loading {path}: {e}")
         return pd.DataFrame()
 
-cities_df = safe_load_csv(CITIES_CSV)
-attractions_df = safe_load_csv(ATTRACTIONS_CSV)
-food_df = safe_load_csv(FOOD_CSV)
-phrasebook_df = safe_load_csv(PHRASEBOOK_CSV)
 stays_df = safe_load_csv(STAYS_CSV)
 events_df = safe_load_csv(EVENTS_CSV)
+food_df = safe_load_csv(FOOD_CSV)
+phrasebook_df = safe_load_csv(PHRASEBOOK_CSV)
+attractions_df = safe_load_csv(ATTRACTIONS_CSV)
 
 
 @router.get("/search_stay")
@@ -66,13 +64,13 @@ def search_events(city: str = "Hyderabad"):
         if results:
             return {"city": city, "results": results}
 
-    # fallback: attractions as events
-    city_attractions = attractions_df[attractions_df["city"] == city]
+    # fallback: attractions as mock events
+    city_attractions = attractions_df[attractions_df["city"].str.lower() == city.lower()]
     results = []
     for _, row in city_attractions.iterrows():
         results.append({
-            "title": row["name"],
-            "type": row.get("type", "Event/Attraction"),
+            "name": row["name"],
+            "category": row.get("type", "Event/Attraction"),
             "price": random.choice([0, 200, 300, 500]),
             "description": row.get("description", ""),
         })
@@ -83,17 +81,21 @@ def search_events(city: str = "Hyderabad"):
 def search_food(city: str = "Hyderabad"):
     """
     Returns popular foods for a city.
-    Uses food.csv
+    Uses food.csv with mock fallback.
     """
-    city_food = food_df[food_df["city"] == city]
+    city_food = food_df[food_df["city"].str.lower() == city.lower()]
 
     if city_food.empty:
-        return {"city": city, "results": []}
+        # fallback mock
+        return {"city": city, "results": [
+            {"name": f"{city} Biryani", "description": "Famous local dish", "price": 200},
+            {"name": f"{city} Street Snacks", "description": "Popular street food", "price": 100},
+        ]}
 
     results = []
     for _, row in city_food.iterrows():
         results.append({
-            "dish": row["dish"],
+            "name": row["dish"],
             "description": row.get("description", ""),
             "price": random.choice([100, 150, 200, 250]),
         })
@@ -106,10 +108,13 @@ def phrasebook(language: str = "Hindi"):
     Returns travel phrasebook for a language.
     Uses phrasebook.csv
     """
-    lang_phrases = phrasebook_df[phrasebook_df["language"] == language]
+    lang_phrases = phrasebook_df[phrasebook_df["language"].str.lower() == language.lower()]
 
     if lang_phrases.empty:
-        return {"language": language, "results": []}
+        return {"language": language, "results": [
+            {"english": "Hello", "translation": "Namaste"},
+            {"english": "Thank you", "translation": "Dhanyavaad"},
+        ]}
 
     results = []
     for _, row in lang_phrases.iterrows():
