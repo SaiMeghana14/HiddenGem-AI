@@ -1,12 +1,13 @@
-from fastapi import APIRouter, Query
-from data import phrasebook
+from fastapi import APIRouter
 
-router = APIRouter(prefix="/translator", tags=["translator"])
+router = APIRouter()
 
 @router.get("/translate")
-def translate(phrase: str = Query(...), lang: str = Query("hindi")):
-    translations = phrasebook.get_phrasebook()
-    for p in translations:
-        if p["english"].lower() == phrase.lower():
-            return { "english": phrase, lang: p.get(lang, "Not available") }
-    return {"message": "Phrase not found"}
+def translate(text: str = "Hello", target_lang: str = "Hindi"):
+    mock_translations = {
+        "Hindi": "नमस्ते",
+        "Telugu": "హలో",
+        "French": "Bonjour"
+    }
+    translated = mock_translations.get(target_lang, text)
+    return {"text": text, "target_lang": target_lang, "translation": translated}
