@@ -21,7 +21,7 @@ def vote(place_id: int, up: bool = True):
     return {"place_id": place_id, "delta": 1 if up else -1}
 
 @router.get("/list")
-def list_places(city: str = "Hyderabad"):
+def list_places(city: str):
     return {"items": utils.list_community_places(city)}
 
 @router.post("/visit")
