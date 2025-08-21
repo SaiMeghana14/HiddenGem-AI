@@ -1,15 +1,13 @@
 from fastapi import APIRouter
 
-router = APIRouter(prefix="/safety", tags=["safety"])
+router = APIRouter()
 
-safety_tips = [
-    "Keep your belongings secure in crowded areas.",
-    "Avoid isolated places late at night.",
-    "Use only licensed taxis or ride-sharing apps.",
-    "Stay hydrated and beware of heat in summers.",
-    "Respect local customs and dress codes."
-]
-
-@router.get("/tips")
-def get_safety_tips():
-    return safety_tips
+@router.get("/safety_tips")
+def safety_tips(city: str = "Hyderabad"):
+    tips = [
+        "Avoid isolated areas at night.",
+        "Keep your belongings safe.",
+        "Use registered transport services.",
+        "Respect local culture and traditions."
+    ]
+    return {"city": city, "results": tips}
