@@ -1,12 +1,12 @@
 from fastapi import APIRouter
-from guides.meta import cities, city_guide_text
 
-router = APIRouter()
+router = APIRouter(prefix="/meta", tags=["meta"])
 
-@router.get("/cities")
-def list_cities():
-    return {"cities": cities()}
-
-@router.get("/guide")
-def guide(city: str):
-    return {"guide": city_guide_text(city)}
+@router.get("/")
+def meta_info():
+    return {
+        "app": "Travel Assistant Backend",
+        "version": "1.0.0",
+        "author": "Team HiddenGem",
+        "description": "API backend serving travel recommendations, itineraries, and cultural insights."
+    }
