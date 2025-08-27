@@ -12,7 +12,7 @@ st.set_page_config(page_title="HiddenGem AI", layout="wide")
 st.title("HiddenGem — Smart Travel Companion ✨")
 
 # Backend URL
-BACKEND = st.session_state.get("backend_url", os.getenv("BACKEND_URL","http://localhost:8000"))
+BACKEND = st.session_state.get("backend_url", os.getenv("BACKEND_URL","https://hiddengem-ai.onrender.com"))
 
 def api_get(path, **params):
     try:
