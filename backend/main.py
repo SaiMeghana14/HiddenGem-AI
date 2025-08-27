@@ -31,3 +31,19 @@ app.include_router(meta.router, prefix="/meta", tags=["meta"])
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+@app.get("/meta/cities")
+def list_cities():
+    return {
+        "cities": [
+            "Hyderabad", 
+            "Bengaluru", 
+            "Mumbai", 
+            "Delhi", 
+            "Chennai", 
+            "Kolkata", 
+            "Pune", 
+            "Jaipur", 
+            "Goa"
+        ]
+    }
