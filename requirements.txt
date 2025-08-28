@@ -10,7 +10,7 @@ scikit-learn==1.5.1
 
 # --- Graphs / Maps / Geo ---
 networkx==3.3
-folium==0.17.0
+folium
 geopy==2.4.1
 haversine==2.8.1
 
