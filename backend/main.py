@@ -64,6 +64,11 @@ def root():
         "endpoints": {
             "health": "/health",
             "cities": "/meta/cities",
+            "recommend": "/recommend/mood?q=adventurous",
+            "itinerary": "/itinerary/plan?city=Hyderabad&days=2&budget_per_day=500",
+            "translate": "/translate/text?text=hi&src=auto&dest=hi",
+            "stay": "/stay/search?city=Hyderabad&budget=1500",
+            "safety": "/safety/alerts?city=Hyderabad",
             "docs": "/docs"
         }
     }
