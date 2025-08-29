@@ -61,3 +61,15 @@ def hidden_gems(city: str, budget_per_day: int, solo_mode: bool = False, sustain
         },
         "recommendations": ["Place A", "Place B", "Place C"]
     }
+
+@router.get("/mood")
+def recommend_by_mood(q: str):
+    # Mocked recommendations based on mood
+    if q.lower() == "adventurous":
+        recs = ["Trekking at Ananthagiri Hills", "Kayaking at Hussain Sagar"]
+    elif q.lower() == "relax":
+        recs = ["Charminar evening lights", "Necklace Road sunset walk"]
+    else:
+        recs = ["Explore local markets", "Try street food tour"]
+
+    return {"recommendations": recs}
