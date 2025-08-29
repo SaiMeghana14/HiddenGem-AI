@@ -20,3 +20,10 @@ def phrasebook(text: str, src: str = "auto", dest: str = "en"):
         "dest": dest,
         "translation": f"[{dest}] {text}"
     }
+
+@router.get("/text")
+def translate_text(text: str, src: str, dest: str):
+    # Mock translation (just demo)
+    return {
+        "translated": f"[{src}->{dest}] {text}"
+    }
