@@ -31,3 +31,10 @@ def visit(place_id: int):
         raise HTTPException(404, "place not found")
     badges = gamification.add_visit(place_id)
     return {"place_id": place_id, "badges": badges}
+
+@router.get("/badges")
+def get_badges(user: str):
+    return {
+        "user": user,
+        "badges": ["Explorer", "Sustainability Champ", "Local Expert"]
+    }
