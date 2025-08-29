@@ -11,3 +11,12 @@ def translate(text: str = "Hello", target_lang: str = "Hindi"):
     }
     translated = mock_translations.get(target_lang, text)
     return {"text": text, "target_lang": target_lang, "translation": translated}
+
+@router.get("/phrasebook")
+def phrasebook(text: str, src: str = "auto", dest: str = "en"):
+    return {
+        "original": text,
+        "src": src,
+        "dest": dest,
+        "translation": f"[{dest}] {text}"
+    }
