@@ -20,3 +20,24 @@ def get_food(city: str = "Hyderabad"):
         {"dish": "Irani Chai", "price": 50},
     ]
     return {"city": city, "results": mock_food}
+
+@router.get("/food_spots")
+def food_spots(city: str, authentic: bool = True):
+    return {
+        "city": city,
+        "authentic": authentic,
+        "spots": [
+            {"name": "Spicy Andhra Mess", "type": "local", "rating": 4.7},
+            {"name": "Old City Biryani House", "type": "local", "rating": 4.8}
+        ]
+    }
+
+@router.get("/cultural")
+def cultural(city: str):
+    return {
+        "city": city,
+        "events": [
+            {"name": "Classical Dance Festival", "date": "2025-08-30"},
+            {"name": "Crafts Fair", "date": "2025-09-05"}
+        ]
+    }
