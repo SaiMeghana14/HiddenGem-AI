@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .routers import (
-    recommend, itinerary, transport, culture_food,
+    recommend, itinerary, transport, culture_food, stay,
     safety, community, bookings, translator, facts, meta
 )
 
