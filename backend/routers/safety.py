@@ -11,3 +11,13 @@ def safety_tips(city: str = "Hyderabad"):
         "Respect local culture and traditions."
     ]
     return {"city": city, "results": tips}
+
+@router.get("/alerts")
+def get_alerts(city: str):
+    return {
+        "city": city,
+        "alerts": [
+            {"type": "Weather", "message": "Heavy rain expected today."},
+            {"type": "Health", "message": "Carry mosquito repellent."}
+        ]
+    }
