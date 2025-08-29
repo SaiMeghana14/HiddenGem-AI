@@ -8,6 +8,25 @@ from streamlit.components.v1 import html
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 
+import streamlit as st
+
+# --- Fix st.tabs overflow issue ---
+st.markdown("""
+<style>
+/* Make tabs scrollable instead of cut off */
+[data-baseweb="tab-list"] {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scrollbar-width: thin;
+}
+[data-baseweb="tab"] {
+    flex: 0 0 auto !important;
+    white-space: nowrap !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 st.set_page_config(page_title="HiddenGem AI", layout="wide")
 st.title("HiddenGem — Smart Travel Companion ✨")
 
