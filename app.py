@@ -10,18 +10,16 @@ from reportlab.lib.pagesizes import A4
 
 import streamlit as st
 
-# --- Fix st.tabs overflow issue ---
 st.markdown("""
 <style>
-/* Make tabs scrollable instead of cut off */
+/* Allow tabs to wrap into multiple rows */
 [data-baseweb="tab-list"] {
     display: flex !important;
-    flex-wrap: nowrap !important;
-    overflow-x: auto !important;
-    scrollbar-width: thin;
+    flex-wrap: wrap !important;
+    row-gap: 6px !important;
 }
 [data-baseweb="tab"] {
-    flex: 0 0 auto !important;
+    flex: 1 1 auto !important;
     white-space: nowrap !important;
 }
 </style>
