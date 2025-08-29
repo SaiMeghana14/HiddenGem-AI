@@ -27,6 +27,7 @@ app.include_router(bookings.router, prefix="/bookings", tags=["bookings"])
 app.include_router(translator.router, prefix="/translate", tags=["translate"])
 app.include_router(facts.router, prefix="/facts", tags=["facts"])
 app.include_router(meta.router, prefix="/meta", tags=["meta"])
+app.include_router(stay.router, prefix="/stay", tags=["stay"])
 
 @app.get("/health")
 def health():
