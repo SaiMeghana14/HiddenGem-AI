@@ -67,77 +67,11 @@ with st.sidebar:
     budget = st.number_input("Budget per day (₹)", value=500, step=50)
     prefs = st.multiselect("Preferences", ["nature","food","history","nightlife","adventure","photo","calm","veg","eco","music","class"])
 
-import streamlit as st
-
-# --- Custom CSS & HTML for Tab Bar with Dropdown Overflow ---
-st.markdown("""
-<style>
-.tab-bar {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  background: #fff;
-  padding: 6px 8px;
-  border-bottom: 2px solid #eee;
-  overflow: hidden;
-}
-.tab-item {
-  margin: 0 8px;
-  padding: 6px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 500;
-  white-space: nowrap;
-}
-.tab-item:hover {
-  background: #f5f5f5;
-}
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-.dropdown-content {
-  display: none;
-  position: absolute;
-  right: 0;
-  background-color: #fff;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px rgba(0,0,0,0.1);
-  z-index: 1;
-}
-.dropdown-content a {
-  display: block;
-  padding: 8px 12px;
-  text-decoration: none;
-  color: #333;
-}
-.dropdown-content a:hover {
-  background-color: #f5f5f5;
-}
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-</style>
-
-<div class="tab-bar">
-  <div class="tab-item">🔍 Discover</div>
-  <div class="tab-item">🗺️ Plan</div>
-  <div class="tab-item">🚕 Navigate</div>
-  <div class="tab-item">🍴 Food & Culture</div>
-  <div class="tab-item">🏨 Stay & Safety</div>
-
-  <div class="dropdown">
-    <div class="tab-item">⋯ More</div>
-    <div class="dropdown-content">
-      <a href="#">📷 AR & Facts</a>
-      <a href="#">📓 Travel Diary</a>
-      <a href="#">🤝 Community</a>
-      <a href="#">🛒 Bookings</a>
-      <a href="#">🔔 Translator</a>
-    </div>
-  </div>
-</div>
-""", unsafe_allow_html=True)
+# Tabs
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10 = st.tabs([
+    "🔎 Discover", "🗺️ Plan", "🚖 Navigate", "🍴 Food & Culture",
+    "🏨 Stay & Safety", "📸 AR & Facts", "📓 Travel Diary", "🤝 Community", "🛒 Bookings", "🗣️ Translator"
+])
 
 # 🔎 Discover
 with tab1:
