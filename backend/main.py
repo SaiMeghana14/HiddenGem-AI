@@ -47,3 +47,14 @@ def list_cities():
             "Goa"
         ]
     }
+
+@app.get("/")
+def root():
+    return {
+        "message": "🚀 HiddenGem API is running!",
+        "endpoints": {
+            "health": "/health",
+            "cities": "/meta/cities",
+            "docs": "/docs"
+        }
+    }
