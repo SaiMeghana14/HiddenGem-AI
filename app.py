@@ -155,12 +155,20 @@ with tab5:
     st.subheader("Stay Suggestions & Safety Alerts")
     stay = api_get("/stay/search", city=city, budget=int(budget)).get("stays", [])
     if not stay:
-        stay = [{"name":"Hidden Boutique Homestay","price":1500},{"name":"Backpackers Hub Hostel","price":400}]
-    for s in stay: st.write(f"- {s['name']} · ₹{s['price']}")
+        stay = [
+            {"name": "Hidden Boutique Homestay", "price": 1500},
+            {"name": "Backpackers Hub Hostel", "price": 400}
+        ]
+    for s in stay:
+        st.write(f"- {s['name']} · ₹{s['price']}")
+
     alerts = api_get("/safety/alerts", city=city).get("alerts", [])
     if alerts:
         st.warning("Safety Alerts:")
-        for a in alerts: st.write(f"- {a['type'].title()}: {a['msg']}")
+        for a in alerts:
+            alert_type = a.get("type", "General").title()
+            alert_msg = a.get("msg", "No details available")
+            st.write(f"- {alert_type}: {alert_msg}")
 
 # 📸 AR & Facts
 with tab6:
