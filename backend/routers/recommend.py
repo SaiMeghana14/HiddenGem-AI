@@ -46,3 +46,18 @@ def recommend_attractions(city: str = "Hyderabad"):
         {"name": f"{city} Museum", "type": "Cultural", "rating": 4.1},
     ]
     return {"city": city, "results": fallback}
+
+@router.get("/hidden_gems")
+def hidden_gems(city: str, budget_per_day: int, solo_mode: bool = False, sustainability: bool = False,
+                family: bool = False, accessible: bool = False):
+    return {
+        "city": city,
+        "budget": budget_per_day,
+        "filters": {
+            "solo": solo_mode,
+            "sustainability": sustainability,
+            "family": family,
+            "accessible": accessible,
+        },
+        "recommendations": ["Place A", "Place B", "Place C"]
+    }
